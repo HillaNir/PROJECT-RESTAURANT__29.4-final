@@ -1,0 +1,14 @@
+{% extends 'base.html' %} 
+
+{% block title %} Home Page {% endblock title %} 
+
+{% block content %}
+
+    <div><h1>Welcome To Our Restaurant Site!</h1></div>
+
+    <div>Been Here Before? <a href="{% url 'login_user' %}">Login</a></div>
+    <div>Still don't have an account? Signup <a href="{% url 'signup_user' %}">Here</a></div>
+{% endblock content %}
+
+</body>
+</html>

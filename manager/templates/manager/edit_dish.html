@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Dish {% endblock title %} 
+
+{% block content %}
+  <h1>Edit Dish</h1>
+  <form method="POST">
+    {% csrf_token %}
+      {{ form.as_p }}
+      <div>
+        <label>
+        <input type="checkbox" name="is_gluten_free" {% if dish.is_gluten_free %}checked{% endif %} />
+        <span>Is gluten free</span>
+        </label>
+      </div>
+      <div>
+        <label>
+        <input type="checkbox" name="is_vegeterian" {% if dish.is_vegeterian %}checked{% endif %} />
+        <span>Is vegeterian</span>
+        </label>
+      </div>
+      <button class="waves-effect waves-light btn" type="submit">Save Changes</button>
+  </form>
+
+  <a href="{% url 'show_category' id=dish.category.id %}">Back To All Dishes</a>
+
+{% endblock %}

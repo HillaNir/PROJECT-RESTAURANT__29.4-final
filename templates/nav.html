@@ -1,0 +1,27 @@
+
+<nav style="background-color: rgb(44, 114, 44);">
+    <div class="nav-wrapper">
+      <ul>
+        {% if user.is_authenticated %}
+          <li>Hello {{user.username}}!</a></li>
+          <!-- <li><a href="/">Home</a></li> -->
+          <li><a href="{% url 'all_categories'%}">Home</a></li>
+          {% if user.is_staff %}
+            <li><a href="{% url 'add_category' %}">Add Category</a></li>
+            <li><a href="{% url 'all_users' %}">All Users</a></li>
+            <li><a href="{% url 'all_deliveries' %}">All Deliveries</a></li>
+          {% else %}
+          <li><a href="{% url 'update_user' id=user.id %}">Update Your Details</a></li>
+          <li><a href="{% url 'show_cart' %}">Your Current Cart</a></li>
+          <li><a href="{% url 'order_history' %}">Previous Orders</a></li>
+          {% endif %}
+          <li><a class="right" href="{% url 'logout_user' %}">Logout</a></li>
+        {% else %}
+          <li><a href="{% url 'signup_user' %}">Sign Up</a></li>
+          <li><a href="{% url 'login_user' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+  
+  

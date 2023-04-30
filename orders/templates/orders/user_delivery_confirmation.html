@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+
+{% block title %} User Delivery Confirmation {% endblock title %} 
+
+{% block content %}
+  <h2>Your Delivery Confirmation</h2>
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Delivery Confirmation</span>
+          <p>Delivery ID: {{ delivery.cart_id }}</p>
+          <p>Address: {{ delivery.address }}</p>
+          <p>Comment: {{ delivery.comment }}</p>
+          <p>Total Cost: {{ total }}</p>
+          <p>Created at: {{ delivery.created }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <a href="{% url 'all_categories' %}">Back To Categories</a>
+  </div>
+{% endblock content %}

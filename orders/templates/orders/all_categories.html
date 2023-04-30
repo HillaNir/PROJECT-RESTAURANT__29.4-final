@@ -1,0 +1,38 @@
+{% extends 'base.html' %} 
+
+{% block title %}All Categories{% endblock title %} 
+
+{% block content %}
+<style>
+    .card {
+      width: 75%;
+    }
+    </style>
+    
+<div class="row">
+  {% for category in categories %}
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <a href="{% url 'show_category' id=category.id %}">
+            <img src="{{category.imageUrl}}" alt="{{category.name}}" width="50%" height="100%">
+          </a>
+        </div>
+        <div class="card-content">
+          <p>{{ category.name }}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  {% if user.is_staff %}
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-content">
+          <a class="waves-effect waves-light btn" href="{% url 'add_category' %}">Add category</a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock content %}

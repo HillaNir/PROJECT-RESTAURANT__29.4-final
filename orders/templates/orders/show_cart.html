@@ -1,0 +1,68 @@
+{% extends 'base.html' %} 
+
+{% block title %} Your Cart {% endblock title %} 
+
+{% block content %}
+    {% if not items %}
+        {% if last_delivery %}
+            {% if last_delivery.is_delivered %}
+                <h1>Your cart is empty.</h1>
+                <h3>Try adding some dishes <a href="{% url 'all_categories' %}">Here</a></h3>
+            {% else %}
+                <h1>Delivery in progress. Please wait until it is completed.</h1>
+            {% endif %}
+        {% else %}
+            <h1>Your cart is empty.</h1>
+            <h3>Try adding some dishes <a href="{% url 'all_categories' %}">Here</a></h3>
+        {% endif %}
+    {% else %}    
+        <h2>Here's your current cart:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dish Name</th>
+                    <th>Price Per Dish</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Total dishes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.dish.name }}</td>
+                    <td>{{ item.dish.price }}</td>
+                    <td>
+                        <form action="{% url 'change_amount' item.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="number" name="amount" min="1" max="10" value="{{ item.amount }}">
+                            <button type="submit">Change amount</button>
+                        </form>
+                    </td>
+                    <td>{{ item.dish.category.name }}</td>
+                    <td>{{ item.total_cost }}</td>
+                    <td>
+                        <form action="{% url 'delete_from_cart' item.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit">Delete item</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr style="font-weight: bold; font-size: larger;">
+                    <td colspan="4">Total Cart</td>
+                    <td>{{ cart.total }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <br>
+        <h6>Add some more dishes <a href="{% url 'all_categories' %}">Here</a></h6>
+        <form action="{% url 'create_delivery' %}" method="POST">
+            {% csrf_token %}
+            <button class="waves-effect waves-light btn" type="submit">Done shopping? Confirm Cart</button>
+        </form>    
+    {% endif %}
+
+{% endblock content %}

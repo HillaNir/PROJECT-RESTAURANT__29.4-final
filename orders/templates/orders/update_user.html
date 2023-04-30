@@ -1,0 +1,15 @@
+{% extends 'base.html' %} 
+
+{% block title %} Update User {% endblock title %} 
+
+{% block content %}
+    <h2>Update Your Details</h2>
+    <form method="POST" action="{% url 'update_user' id=request.user.id %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+    <button class="waves-effect waves-light btn" type="submit">Save Changes</button>
+  </form>
+
+<a href="{% url 'all_categories' %}">Cancel</a>
+
+{% endblock %}

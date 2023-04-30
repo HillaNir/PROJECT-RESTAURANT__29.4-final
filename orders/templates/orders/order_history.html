@@ -1,0 +1,38 @@
+{% extends 'base.html' %} 
+
+{% block title %} Your Order History {% endblock title %} 
+
+{% block content %}
+    {% if not deliveries %}
+        <p>You haven't ordered anything yet. Start adding items to your cart.</p>
+    {% endif %}
+    <h2>Your Order History:</h2>
+    {% if deliveries %}
+        <table class="striped">
+        <thead>
+            <tr>
+            <th>Delivery id:</th>
+            <th>Created</th>
+            <th>Total Delivery Cost</th>
+            <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for delivery in deliveries %}
+                <tr>
+                    <td># {{ delivery.cart_id }}</td>
+                    <td>{{ delivery.created|date:"d/m/Y H:i:s" }}</td>
+                    <td>{{ delivery.total }} $</td>
+                    <td>{% if delivery.is_delivered %} Delivered {% else %} In progress {% endif %}</td>
+                </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No delivery history</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <p>No delivery history</p>
+    {% endif %}
+{% endblock content %}

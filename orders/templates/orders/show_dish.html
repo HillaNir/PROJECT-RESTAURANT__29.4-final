@@ -1,0 +1,66 @@
+{% extends 'base.html' %} 
+
+{% block title %} Show Dish {% endblock title %} 
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m7">
+        <div class="card">
+            <div class="card-image">
+                <img src="{{dish.imageUrl}}" width="50%" height="50%"/>
+                <span class="card-title">{{dish.name}}</span>
+            </div>
+            <div class="card-content">
+                    <ul>
+                        <li>{{dish.price}} $</li>
+                        <li>{{dish.description}}</li>
+                        <div style="display:flex">
+                            {% if dish.is_gluten_free %}
+                                <div>
+                                <h6>Gluten Free</h6>
+                                    <img src="https://media.istockphoto.com/id/1155698698/vector/gluten-free-label-food-icon-vector-grey-white-sticker-sign-isolated-illustration-symbol-for.jpg?s=612x612&w=0&k=20&c=7JsFg1Ue9ri2LAFp5Dv8dlw4-1A85fRLiEsZcCbBx2E=" width="50" height="50"/>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div style="display:flex">
+                            {% if dish.is_vegeterian %}
+                                <div>
+                                    <h6>Vegeterian</h6>
+                                    <img src="https://www.nicepng.com/png/detail/658-6588036_vegetarian-icon-latest.png" width="50" height="50"/>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if not user.is_staff %}
+                                <form action="{% url 'add_to_cart' id=dish.id%}" method="POST">
+                                    {% csrf_token %}
+                                    <label for="amount-input">add this dish cart</label>
+                                    <li><input type="number" placeholder="amount" name="amount" min="1" max="10" id="amount-input"></li>
+                                    <button class="waves-effect waves-light btn" type="submit">Add dish</button>
+                                </form>
+                            {% endif %}
+                        <div>
+                    </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+    <div>
+        {% if user.is_staff %}
+            <div>
+                <form action="{% url 'delete_dish' id=dish.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="waves-effect waves-light btn" type="submit">To delete this dish</button>
+                </form>
+            <div>
+                <a class="waves-effect waves-light btn" href="{% url 'edit_dish' id=dish.id %}">To edit this dish</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div>
+        <a href="{% url 'show_category' id=category.id %}">Back To All Dishes</a>
+    </div>
+    {% endblock content %}

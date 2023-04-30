@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+
+{% block title %} Login {% endblock title %} 
+
+{% block content %}
+<h2>Login</h2>
+    <form action="{% url 'login_user' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            <input type="text" name="username" placeholder="Username"/>
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Password"/>
+        </div>
+        <button class="waves-effect waves-light btn" type="submit">Login</button>
+    </form>
+    <div>Still don't have an account? Signup <a href="{% url 'signup_user' %}">Here</a></div>
+    {% endblock content %}

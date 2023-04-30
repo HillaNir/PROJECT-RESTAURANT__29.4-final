@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+
+{% block title %} Show Category {% endblock title %} 
+
+{% block content %}
+    <h2 style="color: rgb(97, 172, 97);">Our {{category.name}}</h2>
+    <ul>
+        {% for dish in category.dish_set.all %}
+            <li><a href="{% url 'show_dish' id=dish.id %}" style="font-size: x-large; color:lightgreen ">◆ {{dish.name}}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'all_categories' %}">Back To Categories</a>
+
+    <div>
+        {% if user.is_staff %}
+        <div>
+            <form action="{% url 'delete_category' id=category.id %}" method="POST">
+                {% csrf_token %}
+                <button class="waves-effect waves-light btn" type="submit">To delete this category</button>
+            </form>
+        </div>            
+        <div><a class="waves-effect waves-light btn" href="{% url 'edit_category' id=category.id %}">To edit this category</a></div>
+        <div><a class="waves-effect waves-light btn" href="{% url 'add_dish' id=category.id %}">To add a dish to "{{category.name}}"</a></div>
+        {% endif %}
+    </div>
+
+    {% endblock content %}

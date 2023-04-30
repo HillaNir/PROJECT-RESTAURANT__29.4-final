@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+
+{% block title %} Add Dish {% endblock title %} 
+
+{% block content %}
+<h2>Add Dish to {{category.name}}</h2>
+  <form method="POST" action="{% url 'add_dish' id=category.id %}">
+    {% csrf_token %}
+      {{ form.as_p }}
+      <div>
+        <label>
+        <input type="checkbox" name="is_gluten_free"/>
+        <span>Is gluten free</span>
+        </label>
+      </div>
+      <div>
+        <label>
+        <input type="checkbox"name="is_vegeterian"/>
+        <span>Is vegeterian</span>
+        </label>
+        </div>
+     
+      <button class="waves-effect waves-light btn" type="submit">Add Dish to {{category.name}}</button>
+  </form>
+
+  <div>
+    <a href="{% url 'show_category' id=category.id %}">Back To All Dishes</a>
+</div>
+
+{% endblock content %}

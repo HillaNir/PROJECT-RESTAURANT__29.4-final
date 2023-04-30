@@ -1,0 +1,25 @@
+{% extends 'base.html' %} 
+
+{% block title %} Delivery Details {% endblock title %} 
+
+{% block content %}
+  <h2>Delivery Details</h2>
+  {% if request.user.is_staff %}
+    <p>Staff members do not need to provide delivery information.</p>
+  {% else %}
+    <h4>Enter your details for delivery:</h4>
+    <form action="{% url 'create_delivery' %}" method="POST">
+      {% csrf_token %}
+      <label for="address">Delivery Address:</label>
+      <input type="text" name="address" id="address">
+      <label for="comment">Delivery Comments:</label>
+      <textarea name="comment" id="comment"></textarea>
+      <button class="waves-effect waves-light btn" type="submit">Confirm Order</button>
+    </form>
+    <div>
+      <a href="{% url 'all_categories' %}">Back To Categories</a>
+    </div>
+  {% endif %}
+{% endblock content %}
+
+
